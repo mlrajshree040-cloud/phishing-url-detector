@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing URL Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Phishing URL Detector</h1>
+        <p>Enter a URL to check if it's safe or suspicious</p>
+
+        <form id="scanForm">
+            <input type="text" id="urlInput" placeholder="https://example.com/login" required>
+            <button type="submit">Check URL</button>
+        </form>
+
+        <div id="result" class="result hidden"></div>
+        <!-- Inside the container, after the result div -->
+<div id="result" class="result hidden"></div>
+<button id="downloadReportBtn" class="download-btn" style="display: none; margin-top: 20px;">📄 Download PDF Report</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    max-width: 700px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+input {
+    flex: 1;
+    padding: 14px 18px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #5a67d8;
+    transform: scale(1.02);
+}
+
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: left;
+    animation: fadeIn 0.3s ease;
+}
+
+.result.safe {
+    background: #e8f5e9;
+    border-left: 8px solid #4caf50;
+}
+
+.result.suspicious {
+    background: #ffebee;
+    border-left: 8px solid #f44336;
+}
+
+.result h2 {
+    margin-bottom: 12px;
+}
+
+.verdict {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.details {
+    background: rgba(0,0,0,0.03);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+ul {
+    margin: 10px 0 0 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Add to style.css */
+.risk-score {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.risk-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.risk-safe {
+    background: #4caf50;
+    color: white;
+}
+.risk-medium {
+    background: #ff9800;
+    color: white;
+}
+.risk-danger {
+    background: #f44336;
+    color: white;
+}
+.progress-bar-container {
+    background: #e0e0e0;
+    border-radius: 10px;
+    height: 20px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+.progress-safe { background: #4caf50; }
+.progress-medium { background: #ff9800; }
+.progress-danger { background: #f44336; }
+.download-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.download-btn:hover {
+    background: #45a049;
+}
