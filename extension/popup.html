@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Phishing Detector</title>
+  <style>
+    body {
+      width: 400px;
+      font-family: system-ui, sans-serif;
+      padding: 16px;
+    }
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+    .result {
+      margin-top: 16px;
+      border-top: 1px solid #ccc;
+      padding-top: 12px;
+    }
+    .safe { color: green; font-weight: bold; }
+    .danger { color: red; font-weight: bold; }
+    .medium { color: orange; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h3>🔍 Phishing URL Detector</h3>
+  <input type="text" id="urlInput" placeholder="Enter URL or right-click a link" />
+  <button id="checkBtn">Check URL</button>
+  <div id="result" class="result"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

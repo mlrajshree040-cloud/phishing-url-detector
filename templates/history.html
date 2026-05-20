@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .nav { display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <span>👋 {{ current_user.username }}</span>
+        <a href="{{ url_for('index') }}">🔍 Detector</a>
+        <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </div>
+    <h2>Your Scan History</h2>
+    {% if scans %}
+    <table>
+        <thead>
+            <tr><th>Date & Time</th><th>URL</th><th>Verdict</th><th>Risk Score</th><th>Risk Level</th></tr>
+        </thead>
+        <tbody>
+        {% for scan in scans %}
+        <tr>
+            <td>{{ scan.scan_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td><a href="{{ scan.url }}" target="_blank">{{ scan.url[:80] }}{% if scan.url|length > 80 %}...{% endif %}</a></td>
+            <td>{{ scan.verdict }}</td>
+            <td>{{ scan.risk_score }}/100</td>
+            <td>{{ scan.risk_level }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No scans yet. Go to the <a href="{{ url_for('index') }}">detector</a> and check some URLs.</p>
+    {% endif %}
+</div>
+</body>
+</html>
