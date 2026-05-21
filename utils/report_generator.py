@@ -5,7 +5,6 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from datetime import datetime
-import os
 
 def generate_pdf_report(url, result, filename=None):
     if filename is None:
@@ -40,14 +39,21 @@ def generate_pdf_report(url, result, filename=None):
     story.append(Paragraph(f"<b>Risk Score:</b> {risk_score}/100", styles['Normal']))
     story.append(Spacer(1, 0.2 * inch))
 
+    # Issues (if any)
+    if result.get('issues'):
+        story.append(Paragraph("Issues", heading_style))
+        for issue in result['issues']:
+            story.append(Paragraph(f"• {issue}", styles['Normal']))
+        story.append(Spacer(1, 0.1 * inch))
+
     # Warnings
     if result.get('warnings'):
         story.append(Paragraph("Warnings", heading_style))
-        for w in result['warnings']:
-            story.append(Paragraph(f"• {w}", styles['Normal']))
+        for warn in result['warnings']:
+            story.append(Paragraph(f"• {warn}", styles['Normal']))
         story.append(Spacer(1, 0.1 * inch))
 
-    # Scan Details Table
+    # Scan details table
     details = result.get('details', {})
     data = [
         ["Check", "Result"],
@@ -61,7 +67,7 @@ def generate_pdf_report(url, result, filename=None):
         ["Double slashes in path", "Yes" if details.get('has_double_slash') else "No"],
         ["Homoglyph domain", "Yes" if details.get('homoglyph_detected') else "No"],
     ]
-    # If a final URL exists after unshortening, add a row
+    # Add final URL if was shortened
     if details.get('final_url'):
         data.append(["Final URL (after unshortening)", details['final_url']])
 
@@ -81,7 +87,7 @@ def generate_pdf_report(url, result, filename=None):
     story.append(table)
     story.append(Spacer(1, 0.2 * inch))
 
-    # ML Verdict
+    # Machine learning verdict
     ml_pred = result.get('ml_prediction')
     if ml_pred is not None:
         ml_text = "⚠️ Phishing" if ml_pred == 1 else "✅ Legitimate"

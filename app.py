@@ -161,9 +161,10 @@ def download_report():
     if not url:
         return jsonify({'error': 'No URL provided'}), 400
 
-    # Re‑scan to get fresh results
+    # Re‑scan the URL
     heuristic_result = heuristic_scanner.scan(url)
 
+    # Get ML prediction if model exists
     ml_prediction = None
     ml_probability = None
     if ml_model is not None:
@@ -173,8 +174,9 @@ def download_report():
             ml_prediction = int(ml_model.predict(feature_array)[0])
             ml_probability = float(ml_model.predict_proba(feature_array)[0][1])
         except Exception as e:
-            print(f"❌ ML error in report: {e}")
+            print(f"ML error in report: {e}")
 
+    # Combine verdicts
     final_verdict = heuristic_result['verdict']
     if ml_prediction == 1:
         final_verdict = "DANGEROUS"
@@ -182,12 +184,12 @@ def download_report():
     heuristic_result['ml_prediction'] = ml_prediction
     heuristic_result['ml_probability'] = ml_probability
 
+    # Generate PDF
     try:
         pdf_filename = generate_pdf_report(url, heuristic_result)
         return send_file(pdf_filename, as_attachment=True, download_name=pdf_filename)
     except Exception as e:
         return jsonify({'error': f'Failed to generate report: {str(e)}'}), 500
-
 @app.route('/history')
 @login_required
 def history():
