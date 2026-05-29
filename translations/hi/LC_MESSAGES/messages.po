@@ -1,0 +1,67 @@
+# Hindi translations for Phishing URL Detector.
+# Copyright (C) 2026
+# This file is distributed under the same license as the project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Phishing URL Detector\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 13:41+0530\n"
+"PO-Revision-Date: 2026-05-29 14:10+0530\n"
+"Last-Translator: \n"
+"Language: hi\n"
+"Language-Team: hi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app.py:101
+msgid "Registration successful! Please log in."
+msgstr "पंजीकरण सफल! कृपया लॉग इन करें।"
+
+#: app.py:104
+msgid "Username or email already exists."
+msgstr "उपयोगकर्ता नाम या ईमेल पहले से मौजूद है।"
+
+#: app.py:120
+msgid "Invalid username or password"
+msgstr "अमान्य उपयोगकर्ता नाम या पासवर्ड"
+
+#: app.py:140
+msgid "Please enter a URL"
+msgstr "कृपया एक URL दर्ज करें"
+
+#: app.py:185
+msgid "No URL provided"
+msgstr "कोई URL प्रदान नहीं किया गया"
+
+#: templates/index.html
+msgid "Phishing URL Detector"
+msgstr "फ़िशिंग यूआरएल डिटेक्टर"
+
+#: templates/index.html
+msgid "Enter a URL to check if it is safe or suspicious"
+msgstr "जाँच करने के लिए एक URL दर्ज करें कि यह सुरक्षित है या संदिग्ध"
+
+#: templates/index.html
+msgid "Check URL"
+msgstr "URL जाँचें"
+
+#: templates/index.html
+msgid "History"
+msgstr "इतिहास"
+
+#: templates/index.html
+msgid "Logout"
+msgstr "लॉग आउट"
+
+#: templates/index.html
+msgid "Login"
+msgstr "लॉग इन"
+
+#: templates/index.html
+msgid "Register"
+msgstr "पंजीकरण करें"

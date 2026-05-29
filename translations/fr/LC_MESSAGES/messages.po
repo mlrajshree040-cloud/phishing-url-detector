@@ -1,0 +1,67 @@
+# French translations for Phishing URL Detector.
+# Copyright (C) 2026
+# This file is distributed under the same license as the project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Phishing URL Detector\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 13:41+0530\n"
+"PO-Revision-Date: 2026-05-29 14:10+0530\n"
+"Last-Translator: \n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app.py:101
+msgid "Registration successful! Please log in."
+msgstr "Inscription réussie ! Veuillez vous connecter."
+
+#: app.py:104
+msgid "Username or email already exists."
+msgstr "Le nom d'utilisateur ou l'email existe déjà."
+
+#: app.py:120
+msgid "Invalid username or password"
+msgstr "Nom d'utilisateur ou mot de passe invalide"
+
+#: app.py:140
+msgid "Please enter a URL"
+msgstr "Veuillez entrer une URL"
+
+#: app.py:185
+msgid "No URL provided"
+msgstr "Aucune URL fournie"
+
+#: templates/index.html
+msgid "Phishing URL Detector"
+msgstr "Détecteur d'URL de hameçonnage"
+
+#: templates/index.html
+msgid "Enter a URL to check if it is safe or suspicious"
+msgstr "Entrez une URL pour vérifier si elle est sûre ou suspecte"
+
+#: templates/index.html
+msgid "Check URL"
+msgstr "Vérifier l'URL"
+
+#: templates/index.html
+msgid "History"
+msgstr "Historique"
+
+#: templates/index.html
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: templates/index.html
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/index.html
+msgid "Register"
+msgstr "S'inscrire"

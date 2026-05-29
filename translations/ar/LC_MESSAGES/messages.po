@@ -1,0 +1,67 @@
+# Arabic translations for Phishing URL Detector.
+# Copyright (C) 2026
+# This file is distributed under the same license as the project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Phishing URL Detector\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 13:41+0530\n"
+"PO-Revision-Date: 2026-05-29 14:00+0530\n"
+"Last-Translator: \n"
+"Language: ar\n"
+"Language-Team: ar <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app.py:101
+msgid "Registration successful! Please log in."
+msgstr "تم التسجيل بنجاح! يرجى تسجيل الدخول."
+
+#: app.py:104
+msgid "Username or email already exists."
+msgstr "اسم المستخدم أو البريد الإلكتروني موجود بالفعل."
+
+#: app.py:120
+msgid "Invalid username or password"
+msgstr "اسم المستخدم أو كلمة المرور غير صحيحة"
+
+#: app.py:140
+msgid "Please enter a URL"
+msgstr "يرجى إدخال رابط (URL)"
+
+#: app.py:185
+msgid "No URL provided"
+msgstr "لم يتم توفير رابط"
+
+#: templates/index.html
+msgid "Phishing URL Detector"
+msgstr "كاشف روابط التصيد الاحتيالي"
+
+#: templates/index.html
+msgid "Enter a URL to check if it is safe or suspicious"
+msgstr "أدخل رابطاً للتحقق مما إذا كان آمناً أو مشبوهاً"
+
+#: templates/index.html
+msgid "Check URL"
+msgstr "تحقق من الرابط"
+
+#: templates/index.html
+msgid "History"
+msgstr "السجل"
+
+#: templates/index.html
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: templates/index.html
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: templates/index.html
+msgid "Register"
+msgstr "التسجيل"
