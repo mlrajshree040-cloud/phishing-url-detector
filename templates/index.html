@@ -3,34 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing URL Detector</title>
+    <title>{{ _('Phishing URL Detector') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <!-- Top right navigation -->
-        <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 20px;">
+        <!-- Top navigation bar (uses CSS class .nav-bar) -->
+        <div class="nav-bar">
             {% if current_user.is_authenticated %}
                 <span>👋 {{ current_user.username }}</span>
-                <a href="{{ url_for('history') }}">📜 History</a>
-                <a href="{{ url_for('logout') }}">🚪 Logout</a>
+                <a href="{{ url_for('history') }}">{{ _('History') }}</a>
+                <a href="{{ url_for('logout') }}">{{ _('Logout') }}</a>
             {% else %}
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('register') }}">Register</a>
+                <a href="{{ url_for('login') }}">{{ _('Login') }}</a>
+                <a href="{{ url_for('register') }}">{{ _('Register') }}</a>
             {% endif %}
+            <select id="langSelect">
+                <option value="en" {% if session.get('lang') == 'en' %}selected{% endif %}>English</option>
+                <option value="hi" {% if session.get('lang') == 'hi' %}selected{% endif %}>हिन्दी</option>
+                <option value="es" {% if session.get('lang') == 'es' %}selected{% endif %}>Español</option>
+                <option value="fr" {% if session.get('lang') == 'fr' %}selected{% endif %}>Français</option>
+                <option value="ar" {% if session.get('lang') == 'ar' %}selected{% endif %}>العربية</option>
+            </select>
         </div>
 
-        <h1>🔍 Phishing URL Detector</h1>
-        <p>Enter a URL to check if it's safe or suspicious</p>
+        <!-- Main heading and description -->
+        <h1>🔍 {{ _('Phishing URL Detector') }}</h1>
+        <p>{{ _('Enter a URL to check if it is safe or suspicious') }}</p>
 
+        <!-- Scan form -->
         <form id="scanForm">
             <input type="text" id="urlInput" placeholder="https://example.com/login" required>
-            <button type="submit">Check URL</button>
+            <button type="submit">{{ _('Check URL') }}</button>
         </form>
 
+        <!-- Results area -->
         <div id="result" class="result hidden"></div>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Language switcher (works with the existing script.js if needed)
+        document.getElementById('langSelect').addEventListener('change', function() {
+            window.location.href = '/?lang=' + this.value;
+        });
+    </script>
 </body>
 </html>

@@ -1,8 +1,9 @@
 # app.py
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_babel import Babel, gettext as _
 import json
 import joblib
 import numpy as np
@@ -10,6 +11,7 @@ from utils.scanner import PhishingScanner
 from utils.feature_extraction import extract_features
 from utils.report_generator import generate_pdf_report
 import os
+
 # ------------------------------
 # App configuration
 # ------------------------------
@@ -17,6 +19,25 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-this'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.jinja_env.add_extension('jinja2.ext.i18n')
+# ------------------------------
+# Babel Internationalization
+# ------------------------------
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'hi', 'es', 'fr', 'ar']
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    # Check for language preference in the URL arguments
+    lang = request.args.get('lang')
+    if lang in app.config['BABEL_SUPPORTED_LOCALES']:
+        session['lang'] = lang
+        return lang
+    # Check for language stored in the user's session
+    return session.get('lang', app.config['BABEL_DEFAULT_LOCALE'])
+
+
 
 # ------------------------------
 # Database and Login setup
@@ -49,6 +70,7 @@ class ScanHistory(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
+
 # ------------------------------
 # Load ML model (optional)
 # ------------------------------
@@ -75,10 +97,10 @@ def register():
         try:
             db.session.add(user)
             db.session.commit()
-            flash('Registration successful! Please log in.', 'success')
+            flash(_('Registration successful! Please log in.'), 'success')
             return redirect(url_for('login'))
         except:
-            flash('Username or email already exists.', 'danger')
+            flash(_('Username or email already exists.'), 'danger')
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -94,7 +116,7 @@ def login():
             return redirect(url_for('index'))
         else:
             print("Login failed")   # debug
-            flash('Invalid username or password', 'danger')
+            flash(_('Invalid username or password'), 'danger')
     return render_template('login.html')
 
 @app.route('/logout')
@@ -114,7 +136,7 @@ def index():
 def scan():
     url = request.form.get('url', '').strip()
     if not url:
-        return jsonify({'error': 'Please enter a URL'}), 400
+        return jsonify({'error': _('Please enter a URL')}), 400
 
     # 1. Heuristic scan
     heuristic_result = heuristic_scanner.scan(url)
@@ -159,7 +181,7 @@ def scan():
 def download_report():
     url = request.form.get('url', '').strip()
     if not url:
-        return jsonify({'error': 'No URL provided'}), 400
+        return jsonify({'error': _('No URL provided')}), 400
 
     # Re‑scan the URL
     heuristic_result = heuristic_scanner.scan(url)
@@ -190,11 +212,16 @@ def download_report():
         return send_file(pdf_filename, as_attachment=True, download_name=pdf_filename)
     except Exception as e:
         return jsonify({'error': f'Failed to generate report: {str(e)}'}), 500
+
 @app.route('/history')
 @login_required
 def history():
     scans = ScanHistory.query.filter_by(user_id=current_user.id).order_by(ScanHistory.scan_date.desc()).all()
     return render_template('index.html', scans=scans)
+
+@app.route('/landing')
+def landing():
+    return render_template('landing.html')
 
 # ------------------------------
 # Create database tables
@@ -204,6 +231,3 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-@app.route('/landing')
-def landing():
-    return render_template('landing.html')

@@ -2,6 +2,7 @@
 import re
 import whois
 import requests
+import idna
 from urllib.parse import urlparse, urljoin
 from datetime import datetime, timezone
 
@@ -85,6 +86,7 @@ class PhishingScanner:
         return '//' in path
 
     def detect_homoglyph_domain(self, url):
+        """Check for common Latin character substitutions (e.g., 0->o, 1->i)."""
         parsed = urlparse(url)
         domain = parsed.netloc.lower()
         if domain.startswith('www.'):
@@ -94,17 +96,28 @@ class PhishingScanner:
             (r'0', 'o'), (r'1', 'i'), (r'3', 'e'),
             (r'5', 's'), (r'@', 'a'), (r'rn', 'm')
         ]
-        suspicious = False
+        popular_brands = ['google', 'facebook', 'amazon', 'microsoft', 'paypal', 'apple', 'instagram']
         for pattern, replacement in homoglyph_patterns:
             test_domain = re.sub(pattern, replacement, domain)
-            popular_brands = ['google', 'facebook', 'amazon', 'microsoft', 'paypal', 'apple', 'instagram']
             for brand in popular_brands:
                 if brand in test_domain and brand not in domain:
-                    suspicious = True
-                    break
-            if suspicious:
-                break
-        return suspicious
+                    return True
+        return False
+
+    def detect_unicode_homoglyph(self, url):
+        """Detect Unicode homoglyphs (IDN spoofing) in the domain."""
+        try:
+            domain = urlparse(url).netloc.lower()
+            # If any character is outside ASCII range, it's suspicious
+            if any(ord(c) > 127 for c in domain):
+                return True
+            # Check for punycode encoding (indicates IDN)
+            punycode = idna.encode(domain).decode('ascii')
+            if 'xn--' in punycode:
+                return True
+        except Exception:
+            pass
+        return False
 
     # ---------- URL Unshortener ----------
     def unshorten_url(self, url):
@@ -262,6 +275,11 @@ class PhishingScanner:
             issues.append("Domain uses homoglyph characters to mimic trusted brand")
         if was_shortened:
             warnings.append(f"Original shortened URL expanded to: {url}")
+
+        # --- Unicode homoglyph detection (IDN spoofing) ---
+        unicode_homoglyph = self.detect_unicode_homoglyph(url)
+        if unicode_homoglyph:
+            issues.append("Domain uses Unicode homoglyphs (IDN spoofing) – may mimic a trusted site")
 
         # Calculate risk score
         risk_score = self.calculate_risk_score(
